@@ -3438,6 +3438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifierKey: 304
+  modifierKey2: 303
   onRotate:
     m_PersistentCalls:
       m_Calls:

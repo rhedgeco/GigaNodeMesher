@@ -10,6 +10,7 @@ namespace GigaNodeMesher.UiManagement
         private bool _modifier;
 
         [SerializeField] private KeyCode modifierKey;
+        [SerializeField] private KeyCode modifierKey2;
         [SerializeField] private UnityEvent<Vector2> onRotate;
         [SerializeField] private UnityEvent<Vector2> onPan;
         [SerializeField] private UnityEvent<float> onZoom;
@@ -17,12 +18,12 @@ namespace GigaNodeMesher.UiManagement
 
         private void Update()
         {
-            if (Input.GetKey(modifierKey) && !_modifier)
+            if ((Input.GetKey(modifierKey) || Input.GetKey(modifierKey2)) && !_modifier)
             {
                 _modifier = true;
                 onModify.Invoke(true);
             }
-            if (!Input.GetKey(modifierKey) && _modifier)
+            if (!Input.GetKey(modifierKey) && !Input.GetKey(modifierKey2) && _modifier)
             {
                 _modifier = false;
                 onModify.Invoke(false);
