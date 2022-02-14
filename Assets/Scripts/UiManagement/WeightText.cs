@@ -17,7 +17,7 @@ namespace GigaNodeMesher.UiManagement
 
         public void UpdateWeightText(int weight)
         {
-            _text.text = $"Weight: {weight:00}/{GlobalNodeEditorData.WeightMax}";
+            _text.text = $"Node Weight: {weight:00}/{GlobalNodeEditorData.WeightMax}";
         }
     }
 }
