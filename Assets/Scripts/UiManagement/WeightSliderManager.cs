@@ -26,6 +26,7 @@ namespace GigaNodeMesher.UiManagement
 
         private void SetHome()
         {
+            EnsureLoaded();
             _slider.value = GlobalNodeEditorData.WeightMax / 2;
         }
 
