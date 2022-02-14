@@ -38,7 +38,7 @@ namespace GigaNodeMesher.NodeEditing
 
         private void RenderCase1()
         {
-            float weight = GlobalNodeEditorData.Weight / GlobalNodeEditorData.WeightMax;
+            float weight = GlobalNodeEditorData.Weight / (float) GlobalNodeEditorData.WeightMax;
             
             // draw initial borders and grids
             _lineMaterial.SetPass(0);
