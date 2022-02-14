@@ -32,7 +32,7 @@ namespace GigaNodeMesher.NodeEditing
         public void SetWeight(Single value)
         {
             int v = (int) value;
-            _weight = (v > 8 ? 8 : v < 0 ? 0 : v) / 16f;
+            _weight = (v > 16 ? 16 : v < 0 ? 0 : v) / 16f;
             OnWeightChanged.Invoke(Weight);
         }
 
