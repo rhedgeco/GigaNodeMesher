@@ -15,9 +15,9 @@ namespace GigaNodeMesher.UiManagement
             GlobalNodeEditorData.AddWeightListener(UpdateWeightText);
         }
 
-        public void UpdateWeightText(float weight)
+        public void UpdateWeightText(int weight)
         {
-            _text.text = $"Weight: {weight:0.000}";
+            _text.text = $"Weight: {weight:00}/{GlobalNodeEditorData.WeightMax}";
         }
     }
 }

@@ -6,15 +6,17 @@ namespace GigaNodeMesher.NodeEditing
 {
     public class GlobalNodeEditorData : MonoBehaviour
     {
-        private static readonly UnityEvent<float> OnWeightChanged = new UnityEvent<float>();
+        public const int WeightMax = 16;
+        
+        private static readonly UnityEvent<int> OnWeightChanged = new UnityEvent<int>();
         private static readonly UnityEvent<EditMode> OnEditModeChanged = new UnityEvent<EditMode>();
         private static readonly UnityEvent<int> OnBoundaryModeChanged = new UnityEvent<int>();
 
-        private static float _weight = 0.5f;
+        private static int _weight = 8;
         private static EditMode _editMode = EditMode.Boundaries;
         private static int _boundaryMode = 1;
 
-        public static float Weight => _weight;
+        public static int Weight => _weight;
         public static EditMode EditMode => _editMode;
         public static int BoundaryMode => _boundaryMode;
 
@@ -25,21 +27,20 @@ namespace GigaNodeMesher.NodeEditing
             OnBoundaryModeChanged.Invoke(BoundaryMode);
         }
 
-        public static void AddWeightListener(UnityAction<float> act) => OnWeightChanged.AddListener(act);
+        public static void AddWeightListener(UnityAction<int> act) => OnWeightChanged.AddListener(act);
         public static void AddEditModeListener(UnityAction<EditMode> act) => OnEditModeChanged.AddListener(act);
         public static void AddBoundaryModeListener(UnityAction<int> act) => OnBoundaryModeChanged.AddListener(act);
 
         public void SetWeight(Single value)
         {
             int v = (int) value;
-            _weight = (v > 16 ? 16 : v < 0 ? 0 : v) / 16f;
+            _weight = v > WeightMax ? WeightMax : v < 1 ? 1 : v;
             OnWeightChanged.Invoke(Weight);
         }
 
         public void ToggleEditMode()
         {
-            if (_editMode == EditMode.Boundaries) _editMode = EditMode.Volumes;
-            else _editMode = EditMode.Boundaries;
+            _editMode = _editMode == EditMode.Boundaries ? EditMode.Volumes : EditMode.Boundaries;
             OnEditModeChanged.Invoke(EditMode);
         }
 
