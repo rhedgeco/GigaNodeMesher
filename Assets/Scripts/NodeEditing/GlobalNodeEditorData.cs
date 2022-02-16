@@ -1,4 +1,5 @@
 using System;
+using GigaNodeMesher.NodeEditing.BoundaryEditors;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,18 +8,18 @@ namespace GigaNodeMesher.NodeEditing
     public class GlobalNodeEditorData : MonoBehaviour
     {
         public const int WeightMax = 16;
-        
+
         private static readonly UnityEvent<int> OnWeightChanged = new UnityEvent<int>();
         private static readonly UnityEvent<EditMode> OnEditModeChanged = new UnityEvent<EditMode>();
-        private static readonly UnityEvent<int> OnBoundaryModeChanged = new UnityEvent<int>();
+        private static readonly UnityEvent<BoundaryMode> OnBoundaryModeChanged = new UnityEvent<BoundaryMode>();
 
         private static int _weight = 8;
         private static EditMode _editMode = EditMode.Boundaries;
-        private static int _boundaryMode = 1;
+        private static BoundaryMode _boundaryMode = BoundaryMode.One;
 
         public static int Weight => _weight;
         public static EditMode EditMode => _editMode;
-        public static int BoundaryMode => _boundaryMode;
+        public static BoundaryMode BoundaryMode => _boundaryMode;
 
         private void Start()
         {
@@ -29,7 +30,9 @@ namespace GigaNodeMesher.NodeEditing
 
         public static void AddWeightListener(UnityAction<int> act) => OnWeightChanged.AddListener(act);
         public static void AddEditModeListener(UnityAction<EditMode> act) => OnEditModeChanged.AddListener(act);
-        public static void AddBoundaryModeListener(UnityAction<int> act) => OnBoundaryModeChanged.AddListener(act);
+
+        public static void AddBoundaryModeListener(UnityAction<BoundaryMode> act) =>
+            OnBoundaryModeChanged.AddListener(act);
 
         public void SetWeight(Single value)
         {
@@ -46,15 +49,25 @@ namespace GigaNodeMesher.NodeEditing
 
         public void IncrementBoundaryMode()
         {
-            if (_boundaryMode == 3) _boundaryMode = 1;
-            else _boundaryMode++;
+            _boundaryMode = _boundaryMode switch
+            {
+                BoundaryMode.One => BoundaryMode.Two,
+                BoundaryMode.Two => BoundaryMode.Three,
+                BoundaryMode.Three => BoundaryMode.One,
+                _ => _boundaryMode
+            };
             OnBoundaryModeChanged.Invoke(BoundaryMode);
         }
 
         public void DecrementBoundaryMode()
         {
-            if (_boundaryMode == 1) _boundaryMode = 3;
-            else _boundaryMode--;
+            _boundaryMode = _boundaryMode switch
+            {
+                BoundaryMode.One => BoundaryMode.Three,
+                BoundaryMode.Two => BoundaryMode.One,
+                BoundaryMode.Three => BoundaryMode.Two,
+                _ => _boundaryMode
+            };
             OnBoundaryModeChanged.Invoke(BoundaryMode);
         }
     }

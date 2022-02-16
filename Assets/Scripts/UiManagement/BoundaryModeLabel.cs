@@ -1,4 +1,5 @@
 using GigaNodeMesher.NodeEditing;
+using GigaNodeMesher.NodeEditing.BoundaryEditors;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +16,9 @@ namespace GigaNodeMesher.UiManagement
             GlobalNodeEditorData.AddBoundaryModeListener(UpdateLabel);
         }
 
-        public void UpdateLabel(int mode)
+        public void UpdateLabel(BoundaryMode mode)
         {
-            _text.text = $"Case {mode}";
+            _text.text = $"Case {(int) mode}";
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GigaNodeMesher.SceneRendering.OrientationManager
+namespace GigaNodeMesher.SceneRendering
 {
     [RequireComponent(typeof(Camera))]
     [ExecuteInEditMode]
