@@ -108,13 +108,11 @@ namespace GigaNodeMesher.SceneRendering
         {
             _rotLerp = ValidateRot(target);
             
-            // convert current and lerp to positive values
-            if (_rotLerp.x < 0) _rotLerp.x += 360;
-            if (_currentRot.x < 0) _currentRot.x += 360;
-            
-            // reset values spin would be more than 180
-            if (_currentRot.x - _rotLerp.x > 180 ) _currentRot.x -= 360;
-            else if (_rotLerp.x - _currentRot.x > 180 ) _rotLerp.x -= 360;
+            // correct rotation values to always lerp the shortest distance
+            if (Mathf.Abs(_rotLerp.x - _currentRot.x) > 180 && _rotLerp.x > 0) _rotLerp.x -= 360;
+            if (Mathf.Abs(_currentRot.x - _rotLerp.x) > 180 && _currentRot.x > 0) _currentRot.x -= 360;
+            if (Mathf.Abs(_rotLerp.x - _currentRot.x) > 180 && _rotLerp.x < 0) _rotLerp.x += 360;
+            if (Mathf.Abs(_currentRot.x - _rotLerp.x) > 180 && _currentRot.x < 0) _currentRot.x += 360;
         }
 
         private void SetZoomLerp(float target)
