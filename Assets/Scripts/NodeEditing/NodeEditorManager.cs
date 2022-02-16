@@ -7,6 +7,7 @@ namespace GigaNodeMesher.NodeEditing
     [ExecuteInEditMode]
     public class NodeEditorManager : MonoBehaviour
     {
+        [SerializeField] private NodeRenderer nodeRenderer;
         [Header("Boundary Editors"), SerializeField] private BoundaryCase1Editor case1;
         [SerializeField] private BoundaryCase2Editor case2;
         [SerializeField] private BoundaryCase3Editor case3;
