@@ -1,4 +1,3 @@
-using System;
 using GigaNodeMesher.NodeEditing.BoundaryEditors;
 using GigaNodeMesher.NodeEditing.VolumeEditors;
 using UnityEngine;
@@ -15,8 +14,7 @@ namespace GigaNodeMesher.NodeEditing
         private static EditMode _editMode = EditMode.Boundaries;
         private static BoundaryMode _boundaryMode = BoundaryMode.One;
         private static VolumeMode _volumeMode = VolumeMode.One;
-        private static WeightHandler[] _weightHandlers;
-        
+
         public static EditMode EditMode => _editMode;
         public static BoundaryMode BoundaryMode => _boundaryMode;
         public static VolumeMode VolumeMode => _volumeMode;
@@ -35,14 +33,6 @@ namespace GigaNodeMesher.NodeEditing
 
         public static void AddVolumeModeListener(UnityAction<VolumeMode> act) =>
             OnVolumeModeChanged.AddListener(act);
-
-        public static WeightHandler GetWeightHandler(int index)
-        {
-            if (_weightHandlers == null) CreateWeightHandlers();
-            index = index > 8 ? 8 : index < 0 ? 0 : index;
-            // ReSharper disable once PossibleNullReferenceException
-            return _weightHandlers[index];
-        }
 
         public void ToggleEditMode()
         {
@@ -72,12 +62,6 @@ namespace GigaNodeMesher.NodeEditing
                 _ => _boundaryMode
             };
             OnBoundaryModeChanged.Invoke(BoundaryMode);
-        }
-
-        private static void CreateWeightHandlers()
-        {
-            _weightHandlers = new WeightHandler[8];
-            for (int i = 0; i < 8; i++) _weightHandlers[i] = new WeightHandler();
         }
     }
 }

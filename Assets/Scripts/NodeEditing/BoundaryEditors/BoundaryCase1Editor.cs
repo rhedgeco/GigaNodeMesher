@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GigaNodeMesher.NodeEditing.BoundaryEditors
 {
-    public class BoundaryCase1Editor : NodeEditor
+    public class BoundaryCase1Editor : MonoBehaviour
     {
         private void OnRenderObject()
         {

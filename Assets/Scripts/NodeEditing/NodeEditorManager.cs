@@ -7,7 +7,6 @@ namespace GigaNodeMesher.NodeEditing
     [ExecuteInEditMode]
     public class NodeEditorManager : MonoBehaviour
     {
-        [SerializeField] private NodeRenderer nodeRenderer;
         [Header("Boundary Editors"), SerializeField] private BoundaryCase1Editor case1;
         [SerializeField] private BoundaryCase2Editor case2;
         [SerializeField] private BoundaryCase3Editor case3;
@@ -27,9 +26,9 @@ namespace GigaNodeMesher.NodeEditing
         private void OnBoundaryModeChanged(BoundaryMode mode)
         {
             bool editing = GlobalNodeEditorData.EditMode == EditMode.Boundaries;
-            case1.SetEnabled(mode == BoundaryMode.One && editing);
-            case2.SetEnabled(mode == BoundaryMode.Two && editing);
-            case3.SetEnabled(mode == BoundaryMode.Three && editing);
+            case1.gameObject.SetActive(mode == BoundaryMode.One && editing);
+            case2.gameObject.SetActive(mode == BoundaryMode.Two && editing);
+            case3.gameObject.SetActive(mode == BoundaryMode.Three && editing);
         }
 
         private void OnVolumeModeChanged(VolumeMode mode)
@@ -48,22 +47,22 @@ namespace GigaNodeMesher.NodeEditing
             GL.Begin(GL.LINES);
 
             // create X axis line
-            GL.Color(NodeColors.Red);
+            GL.Color(NodeTools.Red);
             GL.Vertex3(0, 0, 0);
             GL.Vertex3(1, 0, 0);
 
             // create Y axis line
-            GL.Color(NodeColors.Green);
+            GL.Color(NodeTools.Green);
             GL.Vertex3(0, 0, 0);
             GL.Vertex3(0, 1, 0);
 
             // create Z axis line
-            GL.Color(NodeColors.Blue);
+            GL.Color(NodeTools.Blue);
             GL.Vertex3(0, 0, 0);
             GL.Vertex3(0, 0, 1);
 
             // draw all other cube lines
-            GL.Color(NodeColors.Gray);
+            GL.Color(NodeTools.Gray);
             GL.Vertex3(1, 0, 0);
             GL.Vertex3(1, 1, 0);
             GL.Vertex3(1, 1, 0);
