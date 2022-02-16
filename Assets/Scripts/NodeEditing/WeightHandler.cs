@@ -19,7 +19,15 @@ namespace GigaNodeMesher.NodeEditing
             }
         }
 
-        public float WeightRatio => _weight / (float) WeightMax;
+        public float WeightRatio
+        {
+            get => _weight / (float) WeightMax;
+            set
+            {
+                float ratio = Mathf.Clamp(value, 0, 1);
+                _weight = Mathf.RoundToInt(WeightMax * ratio);
+            }
+        }
 
         public void AddWeightChangedListener(UnityAction<int> action) => _onWeightChanged.AddListener(action);
     }

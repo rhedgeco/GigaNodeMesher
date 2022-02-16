@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5360256837749709372}
   - component: {fileID: 710354332896869092}
-  - component: {fileID: 515208384037588146}
   - component: {fileID: 6728690890631594717}
   - component: {fileID: 6301602963484047250}
   - component: {fileID: -842003891296996629}
@@ -48,23 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weightIndex: 0
---- !u!114 &515208384037588146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451532948905351423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee6b8f9f22b47b3ad8fa7ca6801e8b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverColor: {r: 0.9098039, g: 0.7058824, b: 1, a: 1}
-  pressColor: {r: 0.54509807, g: 0.5058824, b: 1, a: 1}
+  dragDistance: 100
+  hoverColorAdd: 0.2
 --- !u!33 &6728690890631594717
 MeshFilter:
   m_ObjectHideFlags: 0
