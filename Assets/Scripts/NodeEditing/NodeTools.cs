@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GigaNodeMesher.NodeEditing
 {
-    public static class RenderTools
+    public static class NodeTools
     {
         private static Material _material;
         private static readonly int SrcBlend = Shader.PropertyToID("_SrcBlend");

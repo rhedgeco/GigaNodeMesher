@@ -1,4 +1,5 @@
 using GigaNodeMesher.NodeEditing.BoundaryEditors;
+using GigaNodeMesher.NodeEditing.VolumeEditors;
 using UnityEngine;
 
 namespace GigaNodeMesher.NodeEditing
@@ -7,6 +8,8 @@ namespace GigaNodeMesher.NodeEditing
     public class NodeEditorManager : MonoBehaviour
     {
         [Header("Boundary Editors"), SerializeField] private BoundaryCase1Editor case1;
+        [SerializeField] private BoundaryCase2Editor case2;
+        [SerializeField] private BoundaryCase3Editor case3;
 
         private void Awake()
         {
@@ -16,25 +19,27 @@ namespace GigaNodeMesher.NodeEditing
 
         private void OnEditModeChanged(EditMode mode)
         {
-            if (mode != EditMode.Boundaries) DisableBoundaryEditors();
-            else OnBoundaryModeChanged(GlobalNodeEditorData.BoundaryMode);
+            OnBoundaryModeChanged(GlobalNodeEditorData.BoundaryMode);
+            OnVolumeModeChanged(GlobalNodeEditorData.VolumeMode);
         }
 
         private void OnBoundaryModeChanged(BoundaryMode mode)
         {
-            if (GlobalNodeEditorData.EditMode == EditMode.Volumes) return;
-            case1.SetEnabled(mode == BoundaryMode.One);
+            bool editing = GlobalNodeEditorData.EditMode == EditMode.Boundaries;
+            case1.SetEnabled(mode == BoundaryMode.One && editing);
+            case2.SetEnabled(mode == BoundaryMode.Two && editing);
+            case3.SetEnabled(mode == BoundaryMode.Three && editing);
         }
 
-        private void DisableBoundaryEditors()
+        private void OnVolumeModeChanged(VolumeMode mode)
         {
-            case1.SetEnabled(false);
+            bool editing = GlobalNodeEditorData.EditMode == EditMode.Volumes;
         }
 
         private void OnRenderObject()
         {
-            if (!RenderTools.ShouldDraw(gameObject.layer)) return;
-            RenderTools.StartColor(Color.white);
+            if (!NodeTools.ShouldDraw(gameObject.layer)) return;
+            NodeTools.StartColor(Color.white);
 
             // render outlines of workspace
             GL.PushMatrix();
