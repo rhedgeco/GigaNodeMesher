@@ -7,25 +7,25 @@ namespace GigaNodeMesher.NodeEditing
 {
     public class GlobalNodeEditorData : MonoBehaviour
     {
+        private static readonly UnityEvent<bool> OnWeightModeChanged = new UnityEvent<bool>();
         private static readonly UnityEvent<EditMode> OnEditModeChanged = new UnityEvent<EditMode>();
         private static readonly UnityEvent<BoundaryMode> OnBoundaryModeChanged = new UnityEvent<BoundaryMode>();
         private static readonly UnityEvent<VolumeMode> OnVolumeModeChanged = new UnityEvent<VolumeMode>();
-        
-        private static EditMode _editMode = EditMode.Boundaries;
-        private static BoundaryMode _boundaryMode = BoundaryMode.One;
-        private static VolumeMode _volumeMode = VolumeMode.One;
 
-        public static EditMode EditMode => _editMode;
-        public static BoundaryMode BoundaryMode => _boundaryMode;
-        public static VolumeMode VolumeMode => _volumeMode;
+        public static bool ShowWeightEditors { get; private set; } = false;
+        public static EditMode EditMode { get; private set; } = EditMode.Boundaries;
+        public static BoundaryMode BoundaryMode { get; private set; } = BoundaryMode.One;
+        public static VolumeMode VolumeMode { get; private set; } = VolumeMode.One;
 
         private void Start()
         {
+            OnWeightModeChanged.Invoke(ShowWeightEditors);
             OnEditModeChanged.Invoke(EditMode);
             OnBoundaryModeChanged.Invoke(BoundaryMode);
             OnVolumeModeChanged.Invoke(VolumeMode);
         }
         
+        public static void AddWeightModeListener(UnityAction<bool> act) => OnWeightModeChanged.AddListener(act);
         public static void AddEditModeListener(UnityAction<EditMode> act) => OnEditModeChanged.AddListener(act);
 
         public static void AddBoundaryModeListener(UnityAction<BoundaryMode> act) =>
@@ -34,32 +34,38 @@ namespace GigaNodeMesher.NodeEditing
         public static void AddVolumeModeListener(UnityAction<VolumeMode> act) =>
             OnVolumeModeChanged.AddListener(act);
 
+        public void SetShowWeights(bool show)
+        {
+            ShowWeightEditors = show;
+            OnWeightModeChanged.Invoke(ShowWeightEditors);
+        }
+
         public void ToggleEditMode()
         {
-            _editMode = _editMode == EditMode.Boundaries ? EditMode.Volumes : EditMode.Boundaries;
+            EditMode = EditMode == EditMode.Boundaries ? EditMode.Volumes : EditMode.Boundaries;
             OnEditModeChanged.Invoke(EditMode);
         }
 
         public void IncrementBoundaryMode()
         {
-            _boundaryMode = _boundaryMode switch
+            BoundaryMode = BoundaryMode switch
             {
                 BoundaryMode.One => BoundaryMode.Two,
                 BoundaryMode.Two => BoundaryMode.Three,
                 BoundaryMode.Three => BoundaryMode.One,
-                _ => _boundaryMode
+                _ => BoundaryMode
             };
             OnBoundaryModeChanged.Invoke(BoundaryMode);
         }
 
         public void DecrementBoundaryMode()
         {
-            _boundaryMode = _boundaryMode switch
+            BoundaryMode = BoundaryMode switch
             {
                 BoundaryMode.One => BoundaryMode.Three,
                 BoundaryMode.Two => BoundaryMode.One,
                 BoundaryMode.Three => BoundaryMode.Two,
-                _ => _boundaryMode
+                _ => BoundaryMode
             };
             OnBoundaryModeChanged.Invoke(BoundaryMode);
         }

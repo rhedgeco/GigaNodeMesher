@@ -17,7 +17,7 @@ namespace GigaNodeMesher.UiManagement
 
         public void UpdateText(EditMode mode)
         {
-            _text.text = mode.ToString();
+            _text.text = mode == EditMode.Boundaries ? "Edit Volumes" : "Edit Boundaries";
         }
     }
 }
